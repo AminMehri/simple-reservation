@@ -1,0 +1,30 @@
+body {
+    background-color: #f8f9fa !important;
+  }
+.login-container {
+  max-width: 400px !important;
+  margin: 100px auto !important;
+  padding: 30px !important;
+  background-color: #fff !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1) !important;
+}
+.login-heading {
+  text-align: center !important;
+  margin-bottom: 30px !important;
+}
+.form-control:focus {
+  border-color: var(--orange) !important;
+  box-shadow: none !important;
+}
+.btn-login {
+  background-color: var(--orange) !important;
+  border-color: var(--orange) !important;
+}
+.btn-login:hover {
+  background-color: var(--orange) !important;
+  border-color: var(--orange) !important;
+}
+.form-control {
+  border-radius: 20px !important;
+}
