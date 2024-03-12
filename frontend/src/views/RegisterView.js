@@ -1,22 +1,26 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Loading from "../components/Loading";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import axios from "axios";
 import "../css/Login.css";
 
 function RegisterView() {
+  const navigate = useNavigate();
+
   let [userName, setUserName] = useState("");
-  let [fullName, setFullName] = useState("");
+  let [email, setemail] = useState("");
   let [password, setPassword] = useState("");
   let [passwordConfirm, setPasswordConfirm] = useState("");
 
   let [userNameE, setUserNameE] = useState(false);
-  let [fullNameE, setFullNameE] = useState(false);
+  let [emailE, setemailE] = useState(false);
   let [passwordE, setPasswordE] = useState(false);
   let [passwordConfirmE, setPasswordConfirmE] = useState(false);
 
   let [userNameEM, setUserNameEM] = useState("");
-  let [fullNameEM, setFullNameEM] = useState("");
+  let [emailEM, setemailEM] = useState("");
   let [passwordEM, setPasswordEM] = useState("");
   let [passwordConfirmEM, setPasswordConfirmEM] = useState("");
 
@@ -41,22 +45,22 @@ function RegisterView() {
       setUserNameEM("");
     }
 
-    // if(email.value.indexOf('@') == -1 || email.value.indexOf('.') == -1){
-    //     emailE.value = true
-    //     access = false
-    //     if(email.value.length == 0){
-    //         emailEM.value = 'ایمیل اجباری است'
-    //     } else{
-    //         emailEM.value = 'لطفا ایمیل خود را به صورت صحیح وارد کنید'
-    //     }
-    // } else if(email.value.length < 6){
-    //     emailE.value = true
-    //     access = false
-    //     emailEM.value = 'لطفا ایمیل خود را به صورت صحیح وارد کنید'
-    // } else {
-    //     emailE.value = false
-    //     emailEM.value = ''
-    // }
+    if(email.indexOf('@') == -1 || email.indexOf('.') == -1){
+        setemailE(true)
+        access = false
+        if(email.length == 0){
+            setemailEM('ایمیل اجباری است')
+        } else{
+            setemailEM('لطفا ایمیل خود را به صورت صحیح وارد کنید')
+        }
+    } else if(email.length < 6){
+        setemailE(true)
+        access = false
+        setemailEM('لطفا ایمیل خود را به صورت صحیح وارد کنید')
+    } else {
+        setemailE(false)
+        setemailEM('')
+    }
 
     // Check password length
     if (password.length < 8) {
@@ -102,16 +106,24 @@ function RegisterView() {
     if (access) {
       setLoading(true);
       axios
-        .post("https://jsonplaceholder.typicode.com/posts", {
-          tel: userName,
+        .post("account/signup/", {
+          email: email,
+          username: userName,
           password: password,
         })
         .then((res) => {
           setLoading(false);
-          // console.log(res.data.token);
+          navigate('/login')
         })
         .catch((error) => {
           setLoading(false);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            showConfirmButton: false,
+            timer: 1500,
+            text: error.response.data.message,
+          });
         });
     }
   }
@@ -145,20 +157,20 @@ function RegisterView() {
                       )}
                     </div>
                     <div className="mb-3">
-                      <label for="fullname" className="form-label">
-                        Full name
+                      <label for="email" className="form-label">
+                        Email
                       </label>
                       <input
                         type="text"
                         className="form-control"
-                        id="fullname"
-                        placeholder="Enter full name"
-                        onChange={(e) => setFullName(e.target.value)}
+                        id="email"
+                        placeholder="Enter email"
+                        onChange={(e) => setemail(e.target.value)}
                       />
 
-                      {fullNameE && (
+                      {emailE && (
                         <div class="text-danger invalid-username">
-                          {fullNameEM}
+                          {emailEM}
                         </div>
                       )}
                     </div>

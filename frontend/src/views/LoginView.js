@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Loading from "../components/Loading";
+import Swal from 'sweetalert2'
 import axios from "axios";
 import "../css/Login.css";
 
 function LoginView() {
+  const navigate = useNavigate();
+  
   let [userName, setUserName] = useState('')
   let [password, setPassword] = useState('')
 
@@ -12,16 +15,32 @@ function LoginView() {
 
   function doLogin(e){
     setLoading(true)
-    axios.post('login/', {
-      tel: userName,
+    axios.post('account/login/', {
+      username: userName,
       password: password
     })
     .then(res => {
       setLoading(false)
-      console.log(res.data.token);
+      localStorage.setItem('access', res.data.access)
+      localStorage.setItem('refresh', res.data.refresh)
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "You logged in successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      navigate('/profile', { replace: true });
     })
     .catch(error => {
       setLoading(false)
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        showConfirmButton: false,
+        timer: 1500,
+        text: error.response.data.detail,
+      });
     })
     e.preventDefault()
   }

@@ -1,7 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import '../css/Navbar.css'
 
 function Navbar() {
+  const navigate = useNavigate()
+  const [isAuth, setIsAuth] = useState(false);
+  useEffect(() => {     
+    if (localStorage.getItem('access') !== null) {
+      setIsAuth(true); 
+    }else{
+      setIsAuth(false)
+    }
+  }, [useLocation().pathname]);
+
+  function logout(){
+    localStorage.clear()
+    navigate('/')
+  }
+
   return (
     <>
       <div>
@@ -29,9 +45,11 @@ function Navbar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/login">
-                    Login/Register
-                  </Link>
+                  {isAuth && <Link className="nav-link" to="/profile">Profile</Link>}
+                  {!isAuth && <Link className="nav-link" to="/login">Login/Register</Link>}
+                </li>
+                <li className="nav-item">
+                  {isAuth && <button className="nav-link" onClick={logout}>Logout</button>}
                 </li>
               </ul>
             </div>
