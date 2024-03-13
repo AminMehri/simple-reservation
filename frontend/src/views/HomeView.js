@@ -21,8 +21,8 @@ function HomeView() {
         </ul>
       </nav>
 
-      <div class="m-4">
-        <table class="table table-bordered">
+      <div className="m-4">
+        <table className="table table-bordered">
           <thead>
             <tr className="text-center">
               <th>8-10</th>
