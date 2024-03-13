@@ -1,10 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react';
 import axios from 'axios';
-import LoginView from './views/LoginView'
+import LoginView from './views/LoginView';
 import RegisterView from './views/RegisterView';
 import ProfileView from './views/ProfileView';
-import Navbar from './components/Navbar'
+import HomeView from './views/HomeView';
+import Navbar from './components/Navbar';
 import './css/App.css';
 
 
@@ -17,6 +18,7 @@ function App() {
       <Navbar/>
 
       <Routes>
+        <Route path='/' element={<HomeView />} />
         <Route path='/login' element={<LoginView />} />
         <Route path='/register' element={<RegisterView />} />
         <Route path='/profile' element={<ProfileView />} />
