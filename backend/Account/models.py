@@ -15,3 +15,6 @@ class Account(models.Model):
     email_verified = models.BooleanField(default=False)
     reset_token_created_at = models.DateTimeField(auto_now=False, auto_now_add=False, null=True)
     reset_password_token = models.CharField(max_length=256, null=True)
+
+    def __str__(self):
+        return self.user.username

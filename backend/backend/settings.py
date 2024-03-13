@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'Account',
+    'Reservation',
     'rest_framework',
     'rest_framework_simplejwt',
     'after_response',
