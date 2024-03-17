@@ -10,9 +10,9 @@ import './css/App.css';
 
 
 function App() {
-  useEffect(() => {
+  if(localStorage.getItem('access')){
     axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access')}`;
-  }, localStorage.getItem('access'))
+  }
   return (
     <div className="App mt-0">
       <Navbar/>

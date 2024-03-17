@@ -23,6 +23,7 @@ function LoginView() {
       setLoading(false)
       localStorage.setItem('access', res.data.access)
       localStorage.setItem('refresh', res.data.refresh)
+      axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.access}`;
       Swal.fire({
         position: "top-end",
         icon: "success",

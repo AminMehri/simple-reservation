@@ -25,20 +25,23 @@ function HomeView() {
       .then(res => {
         setLoading(false)
         setReserveList(res.data)
+        res.data.map(r => {
+          document.getElementById(r.reserved_time).innerHTML = `Reserved by ${r.client}`
+          document.getElementById(r.reserved_time).classList.add("bg-danger")
+        })
       })
       .catch(error => {
         setLoading(false)
       })
     
-      timeList.map(r => {
-        document.getElementById(r).innerHTML = "Free"
-        document.getElementById(r).className = 'btn w-100'
-      })
-    reserveList.map(r => {
-      document.getElementById(r.reserved_time).innerHTML = `Reserved by ${r.client}`
-      document.getElementById(r.reserved_time).classList.add("bg-danger")
+    timeList.map(r => {
+      document.getElementById(r).innerHTML = "Free"
+      document.getElementById(r).className = 'btn w-100'
     })
   }
+  useEffect(() => {
+    getReservation()
+  }, [])
 
   function workReservation(data){
     if(data.target.innerHTML === 'Free'){
@@ -63,7 +66,7 @@ function HomeView() {
           timer: 1500,
           text: "Successfully booked!",
         });
-        document.getElementById(data.target.id).innerHTML = "Reserved"
+        document.getElementById(data.target.id).innerHTML = `Reserved ${res.data.username}`
         document.getElementById(data.target.id).classList.add("bg-danger")
       })
       .catch(error => {
@@ -111,7 +114,7 @@ function HomeView() {
         <ul class="pagination justify-content-center my-5">
 
           <li class="page-item">
-            <a class="page-link" href="#" onClick={getReservation}>
+            <a class="page-link" id="get-reservations-today" href="#" onClick={getReservation}>
               Today
             </a>
           </li>

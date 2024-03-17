@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import '../css/Navbar.css'
 
 function Navbar() {
@@ -15,7 +16,8 @@ function Navbar() {
 
   function logout(){
     localStorage.clear()
-    navigate('/')
+    axios.defaults.headers.common['Authorization'] = null;
+    navigate('/login')
   }
 
   return (

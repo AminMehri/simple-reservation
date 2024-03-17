@@ -27,6 +27,7 @@ class BookReservation(APIView):
     def post(self, request):
         try:
             user = self.request.user
+            username = self.request.user.username
             account = Account.objects.get(user=user)
             day = self.request.data.get('day')
             time = self.request.data.get('time')
@@ -35,9 +36,9 @@ class BookReservation(APIView):
                 return Response({"message": "Already reserved!"}, status=status.HTTP_306_RESERVED)
             
             Reservation.objects.create(client=account,reserved_time=time, reserved_day=day)
-            return Response(status=status.HTTP_200_OK)
-        except:
-            return Response({"message": "Values is not acceptable"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"username": username}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

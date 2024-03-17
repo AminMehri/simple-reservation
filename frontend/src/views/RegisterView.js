@@ -113,6 +113,12 @@ function RegisterView() {
         })
         .then((res) => {
           setLoading(false);
+          Swal.fire({
+            icon: "success",
+            title: "You successfully registered",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           navigate('/login')
         })
         .catch((error) => {
