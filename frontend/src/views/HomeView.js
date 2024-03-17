@@ -7,7 +7,6 @@ import Swal from 'sweetalert2'
 
 function HomeView() {
   let [loading, setLoading] = useState(false);
-  let [reserveList, setReserveList] = useState([]);
 
   let dateTime = new Date()
   let formattedDate = dateTime.toISOString().split('T')[0];
@@ -24,7 +23,6 @@ function HomeView() {
       })
       .then(res => {
         setLoading(false)
-        setReserveList(res.data)
         res.data.map(r => {
           document.getElementById(r.reserved_time).innerHTML = `Reserved by ${r.client}`
           document.getElementById(r.reserved_time).classList.add("bg-danger")
